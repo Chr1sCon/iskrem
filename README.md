@@ -2,6 +2,8 @@
 
 This is an ice cream counter web application that allows users to track the number of ice creams consumed by each person. The app is built using HTML, CSS, JavaScript, and jQuery. It features a responsive design, leaderboard sorting, and animated components. This project was developed almost entirely with the assistance of OpenAI's ChatGPT-4.
 
+![Ice Cream Counter](https://github.com/Chr1sCon/iskrem/blob/main/screenshot.png?raw=true)
+
 ## Features
 
 - Add and remove people from the leaderboard
@@ -18,13 +20,13 @@ To run this application on your local machine, follow these steps:
 1. Clone the repository to your computer:
 
 ```bash
-git clone https://github.com/your-username/your-repository-name.git
+git clone https://github.com/Chr1sCon/iskrem
 ```
 
 2. Navigate to the project directory:
 
 ```bash
-cd your-repository-name
+cd iskrem
 ```
 
 3. Open the index.html file in your web browser.
