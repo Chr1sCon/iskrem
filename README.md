@@ -2,7 +2,7 @@
 
 This is an ice cream counter web application that allows users to track the number of ice creams consumed by each person. The app is built using HTML, CSS, JavaScript, and jQuery. It features a responsive design, leaderboard sorting, and animated components. This project was developed almost entirely with the assistance of OpenAI's ChatGPT-4.
 
-![Ice Cream Counter](https://github.com/Chr1sCon/iskrem/blob/main/screenshot.png)
+![Ice Cream Counter](https://github.com/Chr1sCon/iskrem/blob/main/screenshot.png?raw=true)
 
 ## Features
 
