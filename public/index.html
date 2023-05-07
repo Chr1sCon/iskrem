@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iskremteller</title>
+	<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍦</text></svg>">
+
+    <link rel="stylesheet" href="styles.css">
+
+	<link
+		rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+		integrity="sha384-iBBgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/7ucksuyAc12b.5J"
+		crossorigin="anonymous"
+	/>
+
+	<link 
+		rel="stylesheet" 
+		href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" 
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+		crossorigin="anonymous"
+	/>
+
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/date-fns@2.27.0"></script>
+
+
+
+</head>
+<body class="bg-dark text-light">
+    <div id="app">
+        <header>
+			<h1 class="text-center my-3">Iskremteller</h1>
+		</header>
+        
+        <main class="container">
+        	<table class="leaderboard-table">
+				<tr>
+					<th></th>
+					<th>Navn</th>
+					<th>Iskrem</th>
+					<th>Antall</th>
+					<th></th>
+				</tr>
+				<tbody id="leaderboard-tbody"></tbody>
+			</table>
+
+			<div class="chart-container">
+				<canvas id="ice-cream-chart"></canvas>
+			</div>
+
+			<form id="add-person-form" class="my-3">
+				<div class="form-group">
+					<label for="person-name">Legg til person:</label>
+					<div class="input-group">
+						<input type="text" class="form-control" id="person-name" placeholder="Skriv navn her">
+						<button type="submit" class="btn btn-success">Legg til person</button>
+					</div>
+				</div>
+				
+			</form>
+			
+			<div class="log-container mt-3">
+				<p id="log-toggle">Klikk for å se iskremspiselogg</p>
+				<div id="log-content" style="display: none;"">
+					<ul id="timestamp-column" class="log-content"></ul>
+			  	</div>
+			</div>
+			  
+			<button id="clear-data-btn" class="btn btn-danger mt-3">Tilbakestill data</button>
+
+        </main>
+
+        <footer>
+			<p class="text-center my-3">Laget av Chris og ChatGPT</p>
+		</footer>
+    </div>
+    
+	<script
+  src="https://code.jquery.com/jquery-3.6.4.min.js"
+  integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+  crossorigin="anonymous"></script>
+    
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" 
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" 
+		crossorigin="anonymous">
+	</script>
+
+	<script>
+		$(document).ready(function () {
+	  		$("#log-toggle").on("click", function () {
+				$("#log-content").slideToggle("slow");
+	  		});
+		});
+  </script>
+
+	<script>
+		let iceCreamChart;
+
+		function createIceCreamChart() {
+			const chartElement = document.getElementById('ice-cream-chart');
+			iceCreamChart = new Chart(chartElement, {
+				type: 'line',
+				data: {
+					datasets: []
+				},
+				options: {
+					scales: {
+						x: {
+							type: 'time',
+							time: {
+								unit: 'day'
+							}
+						},
+						y: {
+							type: 'linear',
+							min: 0
+						}
+					}
+				}
+			});
+		}
+
+		function updateIceCreamChart(iceCreamData) {
+			iceCreamChart.data.datasets = iceCreamData.map(person => ({
+				label: person.name,
+				data: person.timestamps.map((timestamp, index) => ({
+					x: timestamp,
+					y: index + 1
+				})),
+				borderColor: stringToColor(person.name),
+				fill: false
+			}));
+			iceCreamChart.update();
+		}
+
+		function stringToColor(str) {
+			let hash = 0;
+			for (let i = 0; i < str.length; i++) {
+				hash = str.charCodeAt(i) + ((hash << 5) - hash);
+			}
+			let color = '#';
+			for (let i = 0; i < 3; i++) {
+				const value = (hash >> (i * 8)) & 0xff;
+				color += ('00' + value.toString(16)).substr(-2);
+			}
+			return color;
+		}
+	</script>
+
+	
+	<script type="module" src="main.js"></script>
+</body>
+</html>
