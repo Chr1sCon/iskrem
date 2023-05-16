@@ -10,6 +10,10 @@ import {
     removePerson
 } from './utils/iceCreamCounter.js';
 import { sortLeaderboard } from './utils/sortLeaderboard.js'; 
+import {
+    createIceCreamChart,
+    updateIceCreamChart
+} from './utils/chartManager.js';
 
 let iceCreamData;
 
@@ -37,11 +41,6 @@ let iceCreamData;
 	document.getElementById('clear-data-btn').addEventListener('click', () => {
 		clearData();
 	});
-
-
-
-    // Event listeners for incrementing/decrementing ice cream counts and removing a person
-    // are added within the renderLeaderboard function.
 })();
 
 
@@ -75,12 +74,8 @@ function renderLeaderboard(iceCreamData) {
         personRow.appendChild(nameCell);
 
         const iceCreamIconsCell = document.createElement('td');
-        iceCreamIconsCell.innerHTML = `${'<i class="fas fa-ice-cream"></i>'.repeat(person.iceCreamCount)}`;
+        iceCreamIconsCell.innerHTML = `${'<i class="fas fa-ice-cream"></i>'.repeat(person.iceCreamCount)}` + ` (${person.iceCreamCount})`;
         personRow.appendChild(iceCreamIconsCell);
-
-        const scoreCell = document.createElement('td');
-        scoreCell.textContent = `(${person.iceCreamCount})`;
-        personRow.appendChild(scoreCell);
 
         const decrementButton = document.createElement('button');
         decrementButton.classList.add('btn', 'btn-secondary');
@@ -114,7 +109,7 @@ function renderTimestampColumn(iceCreamData) {
     iceCreamData.forEach((person) => {
         const li = document.createElement('div');
         li.innerHTML = `
-            <h3>${person.name}:</h3>
+            <h3 class="mt-5">${person.name}:</h3>
             ${person.timestamps.map(timestamp => new Date(timestamp).toLocaleString()).join('<br>')}
         `;
         timestampColumn.appendChild(li);
@@ -136,3 +131,13 @@ function clearData() {
     renderTimestampColumn(iceCreamData);
 }
 
+// This function fetches the latest data from the server
+async function updateData() {
+    iceCreamData = await getIceCreamData();
+    renderLeaderboard(iceCreamData);
+    renderTimestampColumn(iceCreamData);
+    updateIceCreamChart(iceCreamData);
+}
+
+// Fetch data every 5 seconds (5000 milliseconds)
+setInterval(updateData, 2000);

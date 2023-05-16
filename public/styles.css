@@ -2,9 +2,12 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-h1 {
+header h1 {
     font-weight: bold;
     color: #ffffff;
+    font-size: 4em;
+    margin-top: 100px;
+    margin-bottom: 100px;
 }
 
 .container {
@@ -45,7 +48,7 @@ footer-component h2 {
 }
 
 .leaderboard-table .highlight {
-    font-size: 1.2em;
+    font-size: 2em;
 }
 
 .timestamp-column {
@@ -73,5 +76,9 @@ footer-component h2 {
 }
 
 button {
+    cursor: pointer;
+}
+
+#log-toggle {
     cursor: pointer;
 }

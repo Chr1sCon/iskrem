@@ -8,6 +8,7 @@ export function createIceCreamChart() {
             datasets: []
         },
         options: {
+            animation: false,
             scales: {
                 x: {
                     type: 'time',
