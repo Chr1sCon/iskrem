@@ -140,4 +140,4 @@ async function updateData() {
 }
 
 // Fetch data every 5 seconds (5000 milliseconds)
-setInterval(updateData, 2000);
+//setInterval(updateData, 2000);
